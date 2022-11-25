@@ -66,7 +66,8 @@ def deposit(request):
         return resp(None, u"无效的取件人", 1)
     if Delivery.objects.filter(
             device_id=request.POST["device_id"],
-            cabinet_no=int(request.POST["cabinet_no"])).exists():
+            cabinet_no=int(request.POST["cabinet_no"]),
+            state__lte=1).exists():
         return resp(None, u"该柜已被占用", 2)
     print("###deposit", deposit_username, pickup_username)
     delivery = Delivery(
